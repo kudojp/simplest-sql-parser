@@ -8,7 +8,11 @@ rule
   # - pattern should be a composed of (`next_token[0]`, another target)
   # - In action, substitute the generated AST node into `result` with `val[0] = next_token[1]`
 
-  EXPRESSION : IDENTIFIER {result = AST::ExpressionNode.new(value: val[0])}
+  # MEMO: The first line in the rule has a special meaning.only the program has to be finally reduced down into the first line.
+  # Every rule has to be reduced down to this target.
+  query : select_statement {result = AST::QueryNode.new(select_statement: val[0])} # TODO: accept from, where, etc.
+  select_statement : SELECT expression { result = AST::SelectStatementNode.new(columns: [AST::ColumnNode.new(col_def: val[1])])} # TODO: accept multiple columns
+  expression : IDENTIFIER {result = AST::ExpressionNode.new(value: val[0])}
 
 ---- header
 ---- inner

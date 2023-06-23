@@ -12,7 +12,7 @@ module AST
       descendants = @columns.map do |column|
         column&.self_and_descendants
       end
-      { "#{self.class}" => descendants }
+      { "#{self.class}" => {"columns" => descendants} }
     end
   end
 end

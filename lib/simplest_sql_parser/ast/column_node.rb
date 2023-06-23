@@ -10,7 +10,7 @@ module AST
 
     def self_and_descendants
       {
-        "#{self.class} (attr: xxxx)" => {
+        "#{self.class}" => {
           "col_def" => @col_def&.self_and_descendants
         }
       }
