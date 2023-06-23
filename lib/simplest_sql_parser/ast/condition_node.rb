@@ -6,12 +6,11 @@ module AST
 
     OPERATORS = [:equals, :larger_than].freeze # TODO: add more operators
 
-    attr_reader :operator
-    attr_reader :left
-    attr_reader :right
+    attr_reader :operator, :left, :right
 
     def initialize(operator:, left:, right:)
-      raise UnsupportedOperatorError.new unless OPERATORS.include? operator
+      raise UnsupportedOperatorError unless OPERATORS.include? operator
+
       @operator = operator
       @left = left
       @right = right

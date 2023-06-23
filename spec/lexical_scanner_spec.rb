@@ -1,5 +1,5 @@
 RSpec.describe SimplestSqlParser::LexicalScanner do
-  let(:scanner){ described_class.new() }
+  let(:scanner) { described_class.new }
 
   context "when a query includes SELECT, FROM statements" do
     it "tokenizes the query" do

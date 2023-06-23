@@ -2,8 +2,7 @@ require_relative "node"
 
 module AST
   class SelectedColumnNode < Node
-    attr_reader :alias_name
-    attr_reader :col_def
+    attr_reader :alias_name, :col_def
 
     def initialize(col_def:, alias_name: nil)
       @col_def = col_def

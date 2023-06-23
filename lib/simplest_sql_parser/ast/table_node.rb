@@ -2,8 +2,7 @@ require_relative "node"
 
 module AST
   class TableNode < Node
-    attr_reader :table_def
-    attr_reader :alias_name
+    attr_reader :table_def, :alias_name
 
     def initialize(table_def:, alias_name: nil)
       @table_def = table_def # For now, this is ExpressionNode

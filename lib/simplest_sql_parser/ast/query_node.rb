@@ -2,9 +2,7 @@ require_relative "node"
 
 module AST
   class QueryNode < Node
-    attr_reader :select_clause
-    attr_reader :from_clause
-    attr_reader :where_clause
+    attr_reader :select_clause, :from_clause, :where_clause
 
     def initialize(select_clause: nil, from_clause: nil, where_clause: nil)
       @select_clause = select_clause

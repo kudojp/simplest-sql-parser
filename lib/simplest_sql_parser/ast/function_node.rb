@@ -5,11 +5,11 @@ module AST
     class UnsupportedTypeError; end
 
     TYPES = [:count] # TODO: add other types (:max, etc)
-    attr_reader :type
-    attr_reader :args
+    attr_reader :type, :args
 
     def initialize(type:, args: [])
       raise UnsupportedTypeError unless TYPES.include? type
+
       @type = type
       @args = args
     end
