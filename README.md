@@ -1,7 +1,11 @@
 # SimplestSqlParser
 
-SimplestSqlParser is a simplest SQL parser written in Ruby.
-Currently it parses queries only with `SELECT`, `FROM`, and `WHERE`.
+SimplestSqlParser is a toy SQL parser written in Ruby.
+Currently it can parse queries composed only of `SELECT`, `FROM`, and `WHERE` clauses.
+
+- `SELECT name, address, age FROM table WHERE id = 12` (SELECT multiple columns)
+- `SELECT * FROM table WHERE id = 12` (SELECT all columns)
+- `SELECT COUNT(*) FROM table  WHERE id = 12` (COUNT function)
 
 ## Installation
 
@@ -13,29 +17,39 @@ gem 'simplest_sql_parser'
 
 And then execute:
 
-    $ bundle install
+```
+$ bundle install
+```
 
 Or install it yourself as:
 
-    $ gem install simplest_sql_parser
+```
+$ gem install simplest_sql_parser
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+```rb
+ast = SimplestSqlParser.parse("Select name FROM table")
+# And do something creative with ast!
+```
 
 ## Development
 
 To update the lex scanner `SimplestSQLParser::LexicalScanner`,
 1. Update `lib/simplest_sql_parser/lexical_scanner.rex`
 2. Run $`bundle exec rex lib/simplest_sql_parser/lexical_scanner.rex`
+3. Test your implementation with `bundle exec rspec spec/lexical_scanner_spec.rb`
+
 
 To update the parser `SimplestSQLParser::Parser`,
 1. Update `lib/simplest_sql_parser/parser.racc`
 2. Run $`bundle exec racc lib/simplest_sql_parser/parser.rex`
+3. Test your implementation with `bundle exec rspec spec/parser_spec.rb`
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/simplest_sql_parser. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/simplest_sql_parser/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/kudojp/simplest_sql_parser. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/simplest_sql_parser/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
