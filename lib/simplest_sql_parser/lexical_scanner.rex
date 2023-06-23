@@ -29,8 +29,8 @@ rule
   ,   { [:COMMA, text] }
   \*   { [:ASTERISK, text] }
   =   {[:EQUALS, text]}
-  \(   {[:PARENTHESIS_RIGHT, text]}
-  \)   {[:PARENTHESIS_LEFT, text]}
+  \(   {[:PARENTHESIS_LEFT, text]}
+  \)   {[:PARENTHESIS_RIGHT, text]}
 
   # identifiers
   {WORD} { [:IDENTIFIER, text] }

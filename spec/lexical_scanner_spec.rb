@@ -65,9 +65,9 @@ RSpec.describe SimplestSqlParser::LexicalScanner do
       scanner.scan_setup("SELECT COUNT(*) FROM table WHERE id = 12")
       expect(scanner.next_token).to eq [:SELECT, "SELECT"]
       expect(scanner.next_token).to eq [:COUNT, "COUNT"]
-      expect(scanner.next_token).to eq [:PARENTHESIS_RIGHT, "("]
+      expect(scanner.next_token).to eq [:PARENTHESIS_LEFT, "("]
       expect(scanner.next_token).to eq [:ASTERISK, "*"]
-      expect(scanner.next_token).to eq [:PARENTHESIS_LEFT, ")"]
+      expect(scanner.next_token).to eq [:PARENTHESIS_RIGHT, ")"]
       expect(scanner.next_token).to eq [:FROM, "FROM"]
       expect(scanner.next_token).to eq [:IDENTIFIER, "table"]
       expect(scanner.next_token).to eq [:WHERE, "WHERE"]
