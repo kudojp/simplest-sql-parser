@@ -1,5 +1,3 @@
-require './lib/simplest_sql_parser/lexical_scanner.rex'
-
 RSpec.describe SimplestSqlParser::LexicalScanner do
   let(:scanner){ described_class.new() }
 
