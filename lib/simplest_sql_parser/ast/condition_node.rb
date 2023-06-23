@@ -2,7 +2,7 @@ require_relative "node"
 
 module AST
   class ConditionNode < Node
-    class UnsupportedTOperatorError < StandardError; end
+    class UnsupportedOperatorError < StandardError; end
 
     OPERATORS = [:equals, :larger_than].freeze # TODO: add more operators
 
@@ -11,7 +11,7 @@ module AST
     attr_reader :right
 
     def initialize(operator:, left:, right:)
-      raise UnsupportedTOperatorError.new unless OPERATORS.include? operator
+      raise UnsupportedOperatorError.new unless OPERATORS.include? operator
       @operator = operator
       @left = left
       @right = right
