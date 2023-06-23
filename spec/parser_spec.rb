@@ -6,8 +6,8 @@ RSpec.describe SimplestSqlParser::Parser do
       ast = described_class.new("SELECT name").do_parse
       expect(ast.self_and_descendants).to eq({
         "AST::QueryNode()" => {
-          "select_statement" => {
-            "AST::SelectStatementNode()" => {
+          "select_clause" => {
+            "AST::SelectClauseNode()" => {
               "selected_columns" => [
                 {
                   "AST::SelectedColumnNode(alias_name=)" => {
@@ -19,8 +19,8 @@ RSpec.describe SimplestSqlParser::Parser do
               ]
             }
           },
-          "from_statement" => nil,
-          "where_statement" => nil,
+          "from_clause" => nil,
+          "where_clause" => nil,
         }
       })
     end
@@ -31,8 +31,8 @@ RSpec.describe SimplestSqlParser::Parser do
       ast = described_class.new("SELECT name FROM table").do_parse
       expect(ast.self_and_descendants).to eq({
         "AST::QueryNode()" => {
-          "select_statement" => {
-            "AST::SelectStatementNode()" => {
+          "select_clause" => {
+            "AST::SelectClauseNode()" => {
               "selected_columns" => [
                 {
                   "AST::SelectedColumnNode(alias_name=)" => {
@@ -44,8 +44,8 @@ RSpec.describe SimplestSqlParser::Parser do
               ]
             }
           },
-          "from_statement" => {
-            "AST::FromStatementNode()" => {
+          "from_clause" => {
+            "AST::FromClauseNode()" => {
               "table" => {
                 "AST::TableNode(alias_name=)" => {
                   "table_def" => {
@@ -55,7 +55,7 @@ RSpec.describe SimplestSqlParser::Parser do
               }
             }
           },
-          "where_statement" => nil,
+          "where_clause" => nil,
         }
       })
     end
@@ -64,8 +64,8 @@ RSpec.describe SimplestSqlParser::Parser do
       ast = described_class.new("SELECT name, address, age FROM table").do_parse
       expect(ast.self_and_descendants).to eq({
         "AST::QueryNode()" => {
-          "select_statement" => {
-            "AST::SelectStatementNode()" => {
+          "select_clause" => {
+            "AST::SelectClauseNode()" => {
               "selected_columns" => [
                 {
                   "AST::SelectedColumnNode(alias_name=)" => {
@@ -91,8 +91,8 @@ RSpec.describe SimplestSqlParser::Parser do
               ]
             }
           },
-          "from_statement" => {
-            "AST::FromStatementNode()" => {
+          "from_clause" => {
+            "AST::FromClauseNode()" => {
               "table" => {
                 "AST::TableNode(alias_name=)" => {
                   "table_def" => {
@@ -102,7 +102,7 @@ RSpec.describe SimplestSqlParser::Parser do
               }
             }
           },
-          "where_statement" => nil,
+          "where_clause" => nil,
         }
       })
     end
@@ -111,8 +111,8 @@ RSpec.describe SimplestSqlParser::Parser do
       ast = described_class.new("SELECT * FROM table").do_parse
       expect(ast.self_and_descendants).to eq({
         "AST::QueryNode()" => {
-          "select_statement" => {
-            "AST::SelectStatementNode()" => {
+          "select_clause" => {
+            "AST::SelectClauseNode()" => {
               "selected_columns" => [
                 {
                   "AST::SelectedColumnNode(alias_name=)" => {
@@ -124,8 +124,8 @@ RSpec.describe SimplestSqlParser::Parser do
               ]
             }
           },
-          "from_statement" => {
-            "AST::FromStatementNode()" => {
+          "from_clause" => {
+            "AST::FromClauseNode()" => {
               "table" => {
                 "AST::TableNode(alias_name=)" => {
                   "table_def" => {
@@ -135,7 +135,7 @@ RSpec.describe SimplestSqlParser::Parser do
               }
             }
           },
-          "where_statement" => nil,
+          "where_clause" => nil,
         }
       })
     end
@@ -146,8 +146,8 @@ RSpec.describe SimplestSqlParser::Parser do
       ast = described_class.new("SELECT name, address FROM table WHERE id = 12.5").do_parse
       expect(ast.self_and_descendants).to eq({
         "AST::QueryNode()" => {
-          "select_statement" => {
-            "AST::SelectStatementNode()" => {
+          "select_clause" => {
+            "AST::SelectClauseNode()" => {
               "selected_columns" => [
                 {
                   "AST::SelectedColumnNode(alias_name=)" => {
@@ -166,8 +166,8 @@ RSpec.describe SimplestSqlParser::Parser do
               ]
             }
           },
-          "from_statement" => {
-            "AST::FromStatementNode()" => {
+          "from_clause" => {
+            "AST::FromClauseNode()" => {
               "table" => {
                 "AST::TableNode(alias_name=)" => {
                   "table_def" => {
@@ -177,8 +177,8 @@ RSpec.describe SimplestSqlParser::Parser do
               }
             }
           },
-          "where_statement" => {
-            "AST::WhereStatementNode()" => {
+          "where_clause" => {
+            "AST::WhereClauseNode()" => {
               "predicate" => [
                 {
                   "AST::ConditionNode(operator=equals)" => {
@@ -207,8 +207,8 @@ RSpec.describe SimplestSqlParser::Parser do
       ast = described_class.new("SELECT COUNT(*) FROM table WHERE id = 12").do_parse
       expect(ast.self_and_descendants).to eq({
         "AST::QueryNode()" => {
-          "select_statement" => {
-            "AST::SelectStatementNode()" => {
+          "select_clause" => {
+            "AST::SelectClauseNode()" => {
               "selected_columns" => [
                 {
                   "AST::SelectedColumnNode(alias_name=)" => {
@@ -224,8 +224,8 @@ RSpec.describe SimplestSqlParser::Parser do
               ]
             }
           },
-          "from_statement" => {
-            "AST::FromStatementNode()" => {
+          "from_clause" => {
+            "AST::FromClauseNode()" => {
               "table" => {
                 "AST::TableNode(alias_name=)" => {
                   "table_def" => {
@@ -235,8 +235,8 @@ RSpec.describe SimplestSqlParser::Parser do
               }
             }
           },
-          "where_statement" => {
-            "AST::WhereStatementNode()" => {
+          "where_clause" => {
+            "AST::WhereClauseNode()" => {
               "predicate" => [
                 {
                   "AST::ConditionNode(operator=equals)" => {

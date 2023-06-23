@@ -1,7 +1,7 @@
 require_relative "node"
 
 module AST
-  class FromStatementNode < Node
+  class FromClauseNode < Node
     attr_reader :table
 
     def initialize(table:)

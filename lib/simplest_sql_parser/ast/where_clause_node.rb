@@ -1,7 +1,7 @@
 require_relative "node"
 
 module AST
-  class WhereStatementNode < Node
+  class WhereClauseNode < Node
     attr_reader :predicate
 
     def initialize(predicate:)

@@ -143,9 +143,9 @@ Racc_token_to_s_table = [
   "EQUALS",
   "$start",
   "query",
-  "select_statement",
-  "from_statement",
-  "where_statement",
+  "select_clause",
+  "from_clause",
+  "where_clause",
   "selected_columns",
   "selected_column",
   "column_node",
@@ -164,28 +164,28 @@ Racc_debug_parser = false
 
 module_eval(<<'.,.,', 'parser.racc', 12)
   def _reduce_1(val, _values, result)
-    result = AST::QueryNode.new(select_statement: val[0])
+    result = AST::QueryNode.new(select_clause: val[0])
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 13)
   def _reduce_2(val, _values, result)
-    result = AST::QueryNode.new(select_statement: val[0], from_statement: val[1])
+    result = AST::QueryNode.new(select_clause: val[0], from_clause: val[1])
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 14)
   def _reduce_3(val, _values, result)
-    result = AST::QueryNode.new(select_statement: val[0], from_statement: val[1], where_statement: val[2])
+    result = AST::QueryNode.new(select_clause: val[0], from_clause: val[1], where_clause: val[2])
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 16)
   def _reduce_4(val, _values, result)
-     result = AST::SelectStatementNode.new(selected_columns: val[1])
+     result = AST::SelectClauseNode.new(selected_columns: val[1])
     result
   end
 .,.,
@@ -245,14 +245,14 @@ module_eval(<<'.,.,', 'parser.racc', 27)
 
 module_eval(<<'.,.,', 'parser.racc', 33)
   def _reduce_14(val, _values, result)
-     result = AST::FromStatementNode.new(table: AST::TableNode.new(table_def: val[1]))
+     result = AST::FromClauseNode.new(table: AST::TableNode.new(table_def: val[1]))
     result
   end
 .,.,
 
 module_eval(<<'.,.,', 'parser.racc', 35)
   def _reduce_15(val, _values, result)
-     result = AST::WhereStatementNode.new(predicate: val[1])
+     result = AST::WhereClauseNode.new(predicate: val[1])
     result
   end
 .,.,

@@ -39,7 +39,7 @@ end
 
 =begin
 QueryNode.new
-  @select: SelectStatementNode.new
+  @select: SelectClauseNode.new
     @columns: Array.new
       - SelectedColumnNode.new   # name
           @alias_name: String.new
@@ -59,11 +59,11 @@ QueryNode.new
               - ColumnNode.new
                 @type: :single_col
                 @name: "name"
-  @from: FromStatementNode.new
+  @from: FromClauseNode.new
     @table: TableNode.new
       @table_def: ExpressionNode.new
       @alias_name: String.new
- @where: WhereStatementNode.new
+ @where: WhereClauseNode.new
     @predicate: Array.new
       - ConditionNode.new
           @operator: :equals
@@ -76,5 +76,5 @@ QueryNode.new
 
 Maybe,,
 - I should create separate classes for each ExpressionNode depending on where it is used??
-- I should create a parent class `StatementNode` for SelectStatementNode, FromStatementNode, and WhereStatementNode.
+- I should create a parent class `ClauseNode` for SelectClauseNode, FromClauseNode, and WhereClauseNode.
 =end

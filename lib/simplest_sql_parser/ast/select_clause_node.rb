@@ -1,7 +1,7 @@
 require_relative "node"
 
 module AST
-  class SelectStatementNode < Node
+  class SelectClauseNode < Node
     attr_reader :selected_columns
 
     def initialize(selected_columns:)

@@ -2,18 +2,18 @@ require_relative "node"
 
 module AST
   class QueryNode < Node
-    attr_reader :select_statement
-    attr_reader :from_statement
-    attr_reader :where_statement
+    attr_reader :select_clause
+    attr_reader :from_clause
+    attr_reader :where_clause
 
-    def initialize(select_statement: nil, from_statement: nil, where_statement: nil)
-      @select_statement = select_statement
-      @from_statement = from_statement
-      @where_statement = where_statement
+    def initialize(select_clause: nil, from_clause: nil, where_clause: nil)
+      @select_clause = select_clause
+      @from_clause = from_clause
+      @where_clause = where_clause
     end
 
     def list_attributes_of_single_child_node
-      [:select_statement, :from_statement, :where_statement]
+      [:select_clause, :from_clause, :where_clause]
     end
   end
 end

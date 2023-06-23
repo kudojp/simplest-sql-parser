@@ -10,11 +10,11 @@ rule
 
   # MEMO: The first line in the rule has a special meaning.only the program has to be finally reduced down into the first line.
   # Every rule has to be reduced down to this target.
-  query : select_statement {result = AST::QueryNode.new(select_statement: val[0])}
-        | select_statement from_statement {result = AST::QueryNode.new(select_statement: val[0], from_statement: val[1])} # TODO: accept from, where, etc.
-        | select_statement from_statement where_statement {result = AST::QueryNode.new(select_statement: val[0], from_statement: val[1], where_statement: val[2])} # TODO: accept from, where, etc.
+  query : select_clause {result = AST::QueryNode.new(select_clause: val[0])}
+        | select_clause from_clause {result = AST::QueryNode.new(select_clause: val[0], from_clause: val[1])} # TODO: accept from, where, etc.
+        | select_clause from_clause where_clause {result = AST::QueryNode.new(select_clause: val[0], from_clause: val[1], where_clause: val[2])} # TODO: accept from, where, etc.
 
-  select_statement : SELECT selected_columns { result = AST::SelectStatementNode.new(selected_columns: val[1])} # TODO: accept multiple columns
+  select_clause : SELECT selected_columns { result = AST::SelectClauseNode.new(selected_columns: val[1])} # TODO: accept multiple columns
 
   selected_columns: selected_column { result = [val[0]] }
                   | selected_columns COMMA selected_column { result = val[0] + [val[2]] }
@@ -31,9 +31,9 @@ rule
   arg_node : column_node
            | function_node
 
-  from_statement : FROM expression { result = AST::FromStatementNode.new(table: AST::TableNode.new(table_def: val[1])) }
+  from_clause : FROM expression { result = AST::FromClauseNode.new(table: AST::TableNode.new(table_def: val[1])) }
 
-  where_statement : WHERE predicate { result = AST::WhereStatementNode.new(predicate: val[1])}
+  where_clause : WHERE predicate { result = AST::WhereClauseNode.new(predicate: val[1])}
 
   predicate : condition { result = [val[0]] }
 #             | predicate AND condition {}
