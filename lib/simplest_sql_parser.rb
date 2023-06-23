@@ -5,6 +5,9 @@ require_relative "simplest_sql_parser/lexical_scanner.rex.rb"
 require_relative "simplest_sql_parser/parser.tab.rb"
 
 module SimplestSqlParser
-  class Error < StandardError; end
-  # Your code goes here...
+  class << self
+    def parse(query)
+      Parser.new(query).do_parse
+    end
+  end
 end
