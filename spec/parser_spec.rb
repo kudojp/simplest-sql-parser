@@ -107,4 +107,37 @@ RSpec.describe SimplestSqlParser::Parser do
       })
     end
   end
+
+  it "generates the AST" do
+    ast = described_class.new("SELECT * FROM table").do_parse
+    expect(ast.self_and_descendants).to eq({
+      "AST::QueryNode" => {
+        "select_statement" => {
+          "AST::SelectStatementNode" => {
+            "selected_columns" => [
+              {
+                "AST::SelectedColumnNode(alias_name=)" => {
+                  "col_def" => {
+                    "AST::ColumnNode(type=asterisk,name=)" => {}
+                  }
+                }
+              },
+            ]
+          }
+        },
+        "from_statement" => {
+          "AST::FromStatementNode" => {
+            "table" => {
+              "AST::TableNode(alias_name=)" => {
+                "table_def" => {
+                  "AST::ExpressionNode(value=table)" => {}
+                }
+              }
+            }
+          }
+        },
+        "where_statement" => nil,
+      }
+    })
+  end
 end

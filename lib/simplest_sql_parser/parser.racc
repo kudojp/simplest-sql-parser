@@ -22,6 +22,7 @@ rule
 #                 | function_node {}
 
   column_node : IDENTIFIER { result = AST::ColumnNode.new(type: :single_col, name: val[0])}
+              | ASTERISK { result = AST::ColumnNode.new(type: :asterisk, name: nil) }
 
   from_statement : FROM expression { result = AST::FromStatementNode.new(table: AST::TableNode.new(table_def: val[1])) }
 
