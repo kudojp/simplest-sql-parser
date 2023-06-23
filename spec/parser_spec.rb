@@ -140,4 +140,65 @@ RSpec.describe SimplestSqlParser::Parser do
       }
     })
   end
+
+  context "when query includes SELECT, FROM, WHERE statement" do
+    it "generates the AST" do
+      ast = described_class.new("SELECT name, address FROM table WHERE id = 12.5").do_parse
+      expect(ast.self_and_descendants).to eq({
+        "AST::QueryNode()" => {
+          "select_statement" => {
+            "AST::SelectStatementNode()" => {
+              "selected_columns" => [
+                {
+                  "AST::SelectedColumnNode(alias_name=)" => {
+                    "col_def" => {
+                      "AST::ColumnNode(type=single_col,name=name)" => {}
+                    }
+                  }
+                },
+                {
+                  "AST::SelectedColumnNode(alias_name=)" => {
+                    "col_def" => {
+                      "AST::ColumnNode(type=single_col,name=address)" => {}
+                    }
+                  }
+                },
+              ]
+            }
+          },
+          "from_statement" => {
+            "AST::FromStatementNode()" => {
+              "table" => {
+                "AST::TableNode(alias_name=)" => {
+                  "table_def" => {
+                    "AST::ExpressionNode(value=table)" => {}
+                  }
+                }
+              }
+            }
+          },
+          "where_statement" => {
+            "AST::WhereStatementNode()" => {
+              "predicate" => [
+                {
+                  "AST::ConditionNode(operator=equals)" => {
+                    "left" => {
+                      "AST::SelectedColumnNode(alias_name=)" => {
+                        "col_def" => {
+                          "AST::ColumnNode(type=single_col,name=id)" => {}
+                        }
+                      }
+                    },
+                    "right" => {
+                      "AST::ExpressionNode(value=12.5)" => {}
+                    }
+                  },
+                }
+              ]
+            }
+          },
+        }
+      })
+    end
+  end
 end

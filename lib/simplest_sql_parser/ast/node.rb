@@ -29,7 +29,7 @@ module AST
       end
 
       list_attributes_of_multiple_child_nodes.each do |attr_sym|
-        descendants[attr_sym.to_s] = self.send(attr_sym).map{|attribute| attribute&.self_and_descendants}
+        descendants[attr_sym.to_s] = self.send(attr_sym)&.map{|attribute| attribute.self_and_descendants}
       end
 
       { "#{self.class}(#{attributes})" => descendants }
@@ -64,9 +64,15 @@ QueryNode.new
       @table_def: ExpressionNode.new
       @alias_name: String.new
  @where: WhereStatementNode.new
-    @predicate: EqualsPredicateNode.new (< PredicateNode)
-      @left: ExpressionNode.new
-      @right: ExpressionNode.new
+    @predicate: Array.new
+      - ConditionNode.new
+          @operator: :equals
+          @left: ExpressionNode.new
+          @right: ExpressionNode.new
+      - EqualsConditionNode.new
+          @operator: :larger_than
+          @left: ExpressionNode.new
+          @right: ExpressionNode.new
 
 Maybe,,
 - I should create separate classes for each ExpressionNode depending on where it is used??
