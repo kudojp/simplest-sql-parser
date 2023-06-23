@@ -19,11 +19,17 @@ rule
   selected_columns: selected_column { result = [val[0]] }
                   | selected_columns COMMA selected_column { result = val[0] + [val[2]] }
 
-  selected_column: column_node { result = AST::SelectedColumnNode.new(col_def: val[0]) }
-#                 | function_node {}
+  selected_column : column_node { result = AST::SelectedColumnNode.new(col_def: val[0]) }
+                  | function_node { result = AST::SelectedColumnNode.new(col_def: val[0]) }
 
   column_node : IDENTIFIER { result = AST::ColumnNode.new(type: :single_col, name: val[0])}
               | ASTERISK { result = AST::ColumnNode.new(type: :asterisk, name: nil) }
+
+  function_node : COUNT PARENTHESIS_LEFT arg_node PARENTHESIS_RIGHT { result = AST::FunctionNode.new(type: :count, args: [val[2]])}
+  #           | MAX PARENTHESIS_LEFT IDENTIFIER PARENTHESIS_RIGHT {}
+
+  arg_node : column_node
+           | function_node
 
   from_statement : FROM expression { result = AST::FromStatementNode.new(table: AST::TableNode.new(table_def: val[1])) }
 

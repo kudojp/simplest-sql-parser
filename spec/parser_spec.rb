@@ -201,4 +201,62 @@ RSpec.describe SimplestSqlParser::Parser do
       })
     end
   end
+
+  context "when a query includes COUNT function" do
+    it "generates the AST" do
+      ast = described_class.new("SELECT COUNT(*) FROM table WHERE id = 12").do_parse
+      expect(ast.self_and_descendants).to eq({
+        "AST::QueryNode()" => {
+          "select_statement" => {
+            "AST::SelectStatementNode()" => {
+              "selected_columns" => [
+                {
+                  "AST::SelectedColumnNode(alias_name=)" => {
+                    "col_def" => {
+                      "AST::FunctionNode(type=count)" => {
+                        "args" => [
+                          "AST::ColumnNode(type=asterisk,name=)" => {}
+                        ]
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "from_statement" => {
+            "AST::FromStatementNode()" => {
+              "table" => {
+                "AST::TableNode(alias_name=)" => {
+                  "table_def" => {
+                    "AST::ExpressionNode(value=table)" => {}
+                  }
+                }
+              }
+            }
+          },
+          "where_statement" => {
+            "AST::WhereStatementNode()" => {
+              "predicate" => [
+                {
+                  "AST::ConditionNode(operator=equals)" => {
+                    "left" => {
+                      "AST::SelectedColumnNode(alias_name=)" => {
+                        "col_def" => {
+                          "AST::ColumnNode(type=single_col,name=id)" => {}
+                        }
+                      }
+                    },
+                    "right" => {
+                      "AST::ExpressionNode(value=12.0)" => {}
+                    }
+                  },
+                }
+              ]
+            }
+          },
+        }
+      })
+    end
+  end
 end
