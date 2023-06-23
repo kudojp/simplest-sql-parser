@@ -24,7 +24,7 @@ QueryNode.new
  @from: FromStatementNode.new
     @table: TableNode.new
       @table_def: ExpressionNode.new
-      @alias: String.new
+      @alias_name: String.new
  @where: WhereStatementNode.new
     @predicate: EqualsPredicateNode.new (< PredicateNode)
       @left: ExpressionNode.new

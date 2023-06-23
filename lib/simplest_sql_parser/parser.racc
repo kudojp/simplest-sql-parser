@@ -10,11 +10,18 @@ rule
 
   # MEMO: The first line in the rule has a special meaning.only the program has to be finally reduced down into the first line.
   # Every rule has to be reduced down to this target.
-  query : select_statement {result = AST::QueryNode.new(select_statement: val[0])} # TODO: accept from, where, etc.
+  query : select_statement {result = AST::QueryNode.new(select_statement: val[0])}
+        | select_statement from_statement {result = AST::QueryNode.new(select_statement: val[0], from_statement: val[1])} # TODO: accept from, where, etc.
+
   select_statement : SELECT expression { result = AST::SelectStatementNode.new(columns: [AST::ColumnNode.new(col_def: val[1])])} # TODO: accept multiple columns
+
+  from_statement : FROM expression { result = AST::FromStatementNode.new(table: AST::TableNode.new(table_def: val[1])) }
+
   expression : IDENTIFIER {result = AST::ExpressionNode.new(value: val[0])}
 
 ---- header
+Dir[File.join(File.dirname(__FILE__), "ast/*.rb")].each {|file| require file }
+
 ---- inner
 # innerの内容はそのまま生成されたparser.tab.rbファイル内のParserクラス内でmodule_evalされる。
 # ref. https://i.loveruby.net/ja/projects/racc/doc/parser.html#Racc%3a%3aParser-yyparse

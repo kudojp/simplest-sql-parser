@@ -23,4 +23,37 @@ RSpec.describe SimplestSqlParser::Parser do
       })
     end
   end
+
+  context "when query includes SELECT, FROM statement" do
+    it "generates the AST" do
+      ast = described_class.new("SELECT name FROM table").do_parse
+      expect(ast.self_and_descendants).to eq({
+        "AST::QueryNode" => {
+          "select_statement" => {
+            "AST::SelectStatementNode" => {
+              "columns" => [
+                "AST::ColumnNode" => {
+                  "col_def" => {
+                      "AST::ExpressionNode(value=name)" => {}
+                  }
+                }
+              ]
+            }
+          },
+          "from_statement" => {
+            "AST::FromStatementNode" => {
+              "table" => {
+                "AST::TableNode(alias_name=)" => {
+                  "table_def" => {
+                    "AST::ExpressionNode(value=table)" => {}
+                  }
+                }
+              }
+            }
+          },
+          "where_statement" => nil,
+        }
+      })
+    end
+  end
 end
