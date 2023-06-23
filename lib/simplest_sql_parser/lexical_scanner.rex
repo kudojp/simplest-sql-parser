@@ -7,25 +7,31 @@ macro
   BLANK \s+
   WORD [a-zA-Z]\w*
   NUMBER \d+(\.\d+)?
+
 rule
+  # Each line should be formatted as:
+  # `start_state pattern { action }
+  #
+  # - In action should return [:TOKEN_SYMBOL, value] (ref. https://docs.ruby-lang.org/en/3.2/Racc/Parser.html#method-i-next_token)
+
   {BLANK}   # do nothing
 
   # keywords
   ## keyword of statements
-  SELECT { [:select, text] }
-  FROM { [:from, text] }
-  WHERE { [:where, text] }
+  SELECT { [:SELECT, text] }
+  FROM { [:FROM, text] }
+  WHERE { [:WHERE, text] }
 
   ## keyword of functions
-  COUNT { [:count, text] }
+  COUNT { [:COUNT, text] }
 
   # tokens
-  ,   { [:comma, text] }
-  \*   { [:asterisk, text] }
-  =   {[:equals, text]}
-  \(   {[:parenthesis_right, text]}
-  \)   {[:parenthesis_left, text]}
+  ,   { [:COMMA, text] }
+  \*   { [:ASTERISK, text] }
+  =   {[:EQUALS, text]}
+  \(   {[:PARENTHESIS_RIGHT, text]}
+  \)   {[:PARENTHESIS_LEFT, text]}
 
   # identifiers
-  {WORD} { [:identifier, text] }
-  {NUMBER} {[:identifier, text.to_f]}
+  {WORD} { [:IDENTIFIER, text] }
+  {NUMBER} {[:IDENTIFIER, text.to_f]}

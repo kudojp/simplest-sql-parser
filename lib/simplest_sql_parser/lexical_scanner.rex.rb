@@ -63,37 +63,37 @@ class SimplestSqlParser::LexicalScanner < Racc::Parser
                     ;
 
                   when (text = @ss.scan(/SELECT/i))
-                     action { [:select, text] }
+                     action { [:SELECT, text] }
 
                   when (text = @ss.scan(/FROM/i))
-                     action { [:from, text] }
+                     action { [:FROM, text] }
 
                   when (text = @ss.scan(/WHERE/i))
-                     action { [:where, text] }
+                     action { [:WHERE, text] }
 
                   when (text = @ss.scan(/COUNT/i))
-                     action { [:count, text] }
+                     action { [:COUNT, text] }
 
                   when (text = @ss.scan(/,/i))
-                     action { [:comma, text] }
+                     action { [:COMMA, text] }
 
                   when (text = @ss.scan(/\*/i))
-                     action { [:asterisk, text] }
+                     action { [:ASTERISK, text] }
 
                   when (text = @ss.scan(/=/i))
-                     action {[:equals, text]}
+                     action {[:EQUALS, text]}
 
                   when (text = @ss.scan(/\(/i))
-                     action {[:parenthesis_right, text]}
+                     action {[:PARENTHESIS_RIGHT, text]}
 
                   when (text = @ss.scan(/\)/i))
-                     action {[:parenthesis_left, text]}
+                     action {[:PARENTHESIS_LEFT, text]}
 
                   when (text = @ss.scan(/[a-zA-Z]\w*/i))
-                     action { [:identifier, text] }
+                     action { [:IDENTIFIER, text] }
 
                   when (text = @ss.scan(/\d+(\.\d+)?/i))
-                     action {[:identifier, text.to_f]}
+                     action {[:IDENTIFIER, text.to_f]}
 
           
           else
