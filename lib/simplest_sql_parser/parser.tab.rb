@@ -10,7 +10,7 @@ require 'racc/parser.rb'
 module SimplestSqlParser
   class Parser < Racc::Parser
 
-module_eval(<<'...end parser.racc/module_eval...', 'parser.racc', 9)
+module_eval(<<'...end parser.racc/module_eval...', 'parser.racc', 14)
 # innerの内容はそのまま生成されたparser.tab.rbファイル内のParserクラス内でmodule_evalされる。
 # ref. https://i.loveruby.net/ja/projects/racc/doc/parser.html#Racc%3a%3aParser-yyparse
 
@@ -62,7 +62,7 @@ racc_shift_n = 5
 racc_token_table = {
   false => 0,
   :error => 1,
-  :PATTERN => 2 }
+  :identifier => 2 }
 
 racc_nt_base = 3
 
@@ -88,9 +88,9 @@ Ractor.make_shareable(Racc_arg) if defined?(Ractor)
 Racc_token_to_s_table = [
   "$end",
   "error",
-  "PATTERN",
+  "identifier",
   "$start",
-  "token_name" ]
+  "expression" ]
 Ractor.make_shareable(Racc_token_to_s_table) if defined?(Ractor)
 
 Racc_debug_parser = false
@@ -99,9 +99,9 @@ Racc_debug_parser = false
 
 # reduce 0 omitted
 
-module_eval(<<'.,.,', 'parser.racc', 4)
+module_eval(<<'.,.,', 'parser.racc', 9)
   def _reduce_1(val, _values, result)
-     "instantiated node to be returned here"
+    result = AST::ExpressionNode.new(value: val[0])
     result
   end
 .,.,

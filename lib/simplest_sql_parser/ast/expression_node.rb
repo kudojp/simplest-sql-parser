@@ -6,7 +6,7 @@ module AST
       @value = value
     end
     def self_and_descendants
-      { "ExpressionNode(value=#{@value})" => {} }
+      { "#{self.class}(value=#{@value})" => {} }
     end
   end
 end

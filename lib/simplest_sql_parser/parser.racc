@@ -1,8 +1,13 @@
 class SimplestSqlParser::Parser
 
+# ref. https://i.loveruby.net/ja/projects/racc/doc/grammar.html
+# It should be:
+# `target : pattern1 | pattern2 { action_block }`
+#
+# - pattern should be a composed of (`next_token[0]`, another target)
+# - In action, substitute the generated AST node into `result` with `val[0] = next_token[1]`
 rule
-  # TODO: add rules here
-  token_name: PATTERN { "instantiated node to be returned here" }
+  expression : identifier {result = AST::ExpressionNode.new(value: val[0])}
 
 ---- header
 ---- inner
