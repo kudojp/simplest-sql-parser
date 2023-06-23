@@ -2,17 +2,17 @@ require_relative "node"
 
 module AST
   class SelectStatementNode < Node
-    attr_reader :columns
+    attr_reader :selected_columns
 
-    def initialize(columns:)
-      @columns = columns # array of ColumnNode instances
+    def initialize(selected_columns:)
+      @selected_columns = selected_columns # array of ColumnNode instances
     end
 
     def self_and_descendants
-      descendants = @columns.map do |column|
+      descendants = @selected_columns.map do |column|
         column&.self_and_descendants
       end
-      { "#{self.class}" => {"columns" => descendants} }
+      { "#{self.class}" => {"selected_columns" => descendants} }
     end
   end
 end

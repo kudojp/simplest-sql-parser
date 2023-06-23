@@ -17,11 +17,25 @@ end
 QueryNode.new
   @select: SelectStatementNode.new
     @columns: Array.new
-      - ColumnNode.new
-          @col_def: ExpressionNode.new
-      - ColumnNode.new
-          @col_def: ExpressionNode.new
- @from: FromStatementNode.new
+      - SelectedColumnNode.new   # name
+          @alias_name: String.new
+          @col_def: ColumnNode.new
+            @type: :single_col
+            @name: "name"
+      - SelectedColumnNode.new   # *
+          @alias_name: String.new
+          @col_def: ColumnNode.new
+            @type: :asterisk
+            @name: nil
+      - SelectedColumnNode.new   # COUNT(name)
+          @alias_name: String.new
+          @col_def: FunctionNode.new
+            @type: :count
+            @args: Array.new
+              - ColumnNode.new
+                @type: :single_col
+                @name: "name"
+  @from: FromStatementNode.new
     @table: TableNode.new
       @table_def: ExpressionNode.new
       @alias_name: String.new

@@ -8,10 +8,12 @@ RSpec.describe SimplestSqlParser::Parser do
         "AST::QueryNode" => {
           "select_statement" => {
             "AST::SelectStatementNode" => {
-              "columns" => [
-                "AST::ColumnNode" => {
-                  "col_def" => {
-                      "AST::ExpressionNode(value=name)" => {}
+              "selected_columns" => [
+                {
+                  "AST::SelectedColumnNode(alias_name=)" => {
+                    "col_def" => {
+                      "AST::ColumnNode(type=single_col,name=name)" => {}
+                    }
                   }
                 }
               ]
@@ -31,12 +33,14 @@ RSpec.describe SimplestSqlParser::Parser do
         "AST::QueryNode" => {
           "select_statement" => {
             "AST::SelectStatementNode" => {
-              "columns" => [
-                "AST::ColumnNode" => {
-                  "col_def" => {
-                      "AST::ExpressionNode(value=name)" => {}
+              "selected_columns" => [
+                {
+                  "AST::SelectedColumnNode(alias_name=)" => {
+                    "col_def" => {
+                      "AST::ColumnNode(type=single_col,name=name)" => {}
+                    }
                   }
-                }
+                },
               ]
             }
           },
@@ -62,25 +66,25 @@ RSpec.describe SimplestSqlParser::Parser do
         "AST::QueryNode" => {
           "select_statement" => {
             "AST::SelectStatementNode" => {
-              "columns" => [
+              "selected_columns" => [
                 {
-                  "AST::ColumnNode" => {
+                  "AST::SelectedColumnNode(alias_name=)" => {
                     "col_def" => {
-                        "AST::ExpressionNode(value=name)" => {}
+                      "AST::ColumnNode(type=single_col,name=name)" => {}
                     }
                   }
                 },
                 {
-                  "AST::ColumnNode" => {
+                  "AST::SelectedColumnNode(alias_name=)" => {
                     "col_def" => {
-                        "AST::ExpressionNode(value=address)" => {}
+                      "AST::ColumnNode(type=single_col,name=address)" => {}
                     }
                   }
                 },
                 {
-                  "AST::ColumnNode" => {
+                  "AST::SelectedColumnNode(alias_name=)" => {
                     "col_def" => {
-                        "AST::ExpressionNode(value=age)" => {}
+                      "AST::ColumnNode(type=single_col,name=age)" => {}
                     }
                   }
                 },
