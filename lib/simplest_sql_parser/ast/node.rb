@@ -1,15 +1,39 @@
 module AST
-  class Node; end # used as an abstract class
+  class Node # used as an abstract class
+    # This should be overwritten in each node if necessary.
+    def list_attributes_without_child
+      []
+      # ["attr1", "attr2"]
+    end
 
-  # used for debugging.
-  def self_and_descendants
-    raise NotImplementedError.new("Implement #self_and_descendants in each node class!")
-    # This method should return a hashmap
-    # {
-    #    "String which represents self" => {
-    #      "child_attr_name1" => child_node_instance1.self_and_descendants,
-    #      "child_attr_name2" => child_node_instance2.self_and_descendants,
-    # }
+    # This should be overwritten in each node if necessary.
+    def list_attributes_of_single_child_node
+      []
+      # [:attr3, attr4]
+    end
+
+    # This should be overwritten in each node if necessary.
+    def list_attributes_of_multiple_child_nodes
+      []
+      # [:attr5, attr6]
+    end
+
+    # used for debugging.
+    def self_and_descendants
+      attributes = list_attributes_without_child.map{|attr_sym| "#{attr_sym}=#{self.send(attr_sym)}"}.join ","
+
+      descendants = {}
+
+      list_attributes_of_single_child_node.each do |attr_sym|
+        descendants[attr_sym.to_s] = self.send(attr_sym)&.self_and_descendants
+      end
+
+      list_attributes_of_multiple_child_nodes.each do |attr_sym|
+        descendants[attr_sym.to_s] = self.send(attr_sym).map{|attribute| attribute&.self_and_descendants}
+      end
+
+      { "#{self.class}(#{attributes})" => descendants }
+    end
   end
 end
 

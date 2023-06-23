@@ -12,14 +12,8 @@ module AST
       @where_statement = where_statement
     end
 
-    def self_and_descendants
-      {
-        "#{self.class}" => {
-          "select_statement" => @select_statement&.self_and_descendants,
-          "from_statement" => @from_statement&.self_and_descendants,
-          "where_statement" => @where_statement&.self_and_descendants,
-        }
-      }
+    def list_attributes_of_single_child_node
+      [:select_statement, :from_statement, :where_statement]
     end
   end
 end

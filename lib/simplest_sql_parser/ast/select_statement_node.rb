@@ -8,11 +8,8 @@ module AST
       @selected_columns = selected_columns # array of ColumnNode instances
     end
 
-    def self_and_descendants
-      descendants = @selected_columns.map do |column|
-        column&.self_and_descendants
-      end
-      { "#{self.class}" => {"selected_columns" => descendants} }
+    def list_attributes_of_multiple_child_nodes
+      [:selected_columns]
     end
   end
 end

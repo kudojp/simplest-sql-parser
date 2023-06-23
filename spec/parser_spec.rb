@@ -5,9 +5,9 @@ RSpec.describe SimplestSqlParser::Parser do
     it "generates the AST" do
       ast = described_class.new("SELECT name").do_parse
       expect(ast.self_and_descendants).to eq({
-        "AST::QueryNode" => {
+        "AST::QueryNode()" => {
           "select_statement" => {
-            "AST::SelectStatementNode" => {
+            "AST::SelectStatementNode()" => {
               "selected_columns" => [
                 {
                   "AST::SelectedColumnNode(alias_name=)" => {
@@ -30,9 +30,9 @@ RSpec.describe SimplestSqlParser::Parser do
     it "generates the AST" do
       ast = described_class.new("SELECT name FROM table").do_parse
       expect(ast.self_and_descendants).to eq({
-        "AST::QueryNode" => {
+        "AST::QueryNode()" => {
           "select_statement" => {
-            "AST::SelectStatementNode" => {
+            "AST::SelectStatementNode()" => {
               "selected_columns" => [
                 {
                   "AST::SelectedColumnNode(alias_name=)" => {
@@ -45,7 +45,7 @@ RSpec.describe SimplestSqlParser::Parser do
             }
           },
           "from_statement" => {
-            "AST::FromStatementNode" => {
+            "AST::FromStatementNode()" => {
               "table" => {
                 "AST::TableNode(alias_name=)" => {
                   "table_def" => {
@@ -63,9 +63,9 @@ RSpec.describe SimplestSqlParser::Parser do
     it "generates the AST" do
       ast = described_class.new("SELECT name, address, age FROM table").do_parse
       expect(ast.self_and_descendants).to eq({
-        "AST::QueryNode" => {
+        "AST::QueryNode()" => {
           "select_statement" => {
-            "AST::SelectStatementNode" => {
+            "AST::SelectStatementNode()" => {
               "selected_columns" => [
                 {
                   "AST::SelectedColumnNode(alias_name=)" => {
@@ -92,7 +92,7 @@ RSpec.describe SimplestSqlParser::Parser do
             }
           },
           "from_statement" => {
-            "AST::FromStatementNode" => {
+            "AST::FromStatementNode()" => {
               "table" => {
                 "AST::TableNode(alias_name=)" => {
                   "table_def" => {
@@ -111,9 +111,9 @@ RSpec.describe SimplestSqlParser::Parser do
   it "generates the AST" do
     ast = described_class.new("SELECT * FROM table").do_parse
     expect(ast.self_and_descendants).to eq({
-      "AST::QueryNode" => {
+      "AST::QueryNode()" => {
         "select_statement" => {
-          "AST::SelectStatementNode" => {
+          "AST::SelectStatementNode()" => {
             "selected_columns" => [
               {
                 "AST::SelectedColumnNode(alias_name=)" => {
@@ -126,7 +126,7 @@ RSpec.describe SimplestSqlParser::Parser do
           }
         },
         "from_statement" => {
-          "AST::FromStatementNode" => {
+          "AST::FromStatementNode()" => {
             "table" => {
               "AST::TableNode(alias_name=)" => {
                 "table_def" => {

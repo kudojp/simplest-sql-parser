@@ -6,7 +6,7 @@ module AST
 
     TYPES = [:single_col, :asterisk].freeze
     attr_reader :type
-    attr_reader :col_def
+    attr_reader :name
 
     def initialize(type: :single_col, name:)
       raise UnsupportedTypeError.new() unless TYPES.include? type
@@ -14,10 +14,8 @@ module AST
       @name = name # nil when type == :asterisk
     end
 
-    def self_and_descendants
-      {
-        "#{self.class}(type=#{@type},name=#{@name})" => {}
-      }
+    def list_attributes_without_child
+      [:type, :name]
     end
   end
 end
