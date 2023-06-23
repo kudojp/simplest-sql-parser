@@ -25,9 +25,9 @@ TODO: Write usage instructions here
 
 ## Development
 
-To update the lex scanner `SimplestSQLParser::LexScanner`,
-1. Update `lib/simplest_sql_parser/lex_scanner.rex`
-2. Run $`bundle exec rex lib/simplest_sql_parser/lex_scanner.rex`
+To update the lex scanner `SimplestSQLParser::LexicalScanner`,
+1. Update `lib/simplest_sql_parser/lexical_scanner.rex`
+2. Run $`bundle exec rex lib/simplest_sql_parser/lexical_scanner.rex`
 
 To update the parser `SimplestSQLParser::Parser`,
 1. Update `lib/simplest_sql_parser/parser.racc`
