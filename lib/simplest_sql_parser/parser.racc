@@ -1,0 +1,24 @@
+class SimplestSqlParser::Parser
+
+rule
+  # TODO: add rules here
+  token_name: PATTERN { "instantiated node to be returned here" }
+
+---- header
+---- inner
+# innerの内容はそのまま生成されたparser.tab.rbファイル内のParserクラス内でmodule_evalされる。
+# ref. https://i.loveruby.net/ja/projects/racc/doc/parser.html#Racc%3a%3aParser-yyparse
+
+def initialize(query)
+  @scanner = SimplestSqlParser::LexicalScanner.new
+  @scanner.scan_setup(query)
+end
+
+# #next_token はここで必ず実装する必要がある。
+def next_token
+  @scanner.next_token
+end
+
+---- footer
+# footerの内容はそのまま生成されたparser.tab.rbファイルの下にコピーされる。
+# ruby parser.tab.rb で直にファイルを実行する際に Parserクラスを使って何かをするときなどに使える。
