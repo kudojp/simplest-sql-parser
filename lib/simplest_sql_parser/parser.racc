@@ -13,7 +13,10 @@ rule
   query : select_statement {result = AST::QueryNode.new(select_statement: val[0])}
         | select_statement from_statement {result = AST::QueryNode.new(select_statement: val[0], from_statement: val[1])} # TODO: accept from, where, etc.
 
-  select_statement : SELECT column { result = AST::SelectStatementNode.new(columns: [val[1]])} # TODO: accept multiple columns
+  select_statement : SELECT columns { result = AST::SelectStatementNode.new(columns: val[1])} # TODO: accept multiple columns
+
+  columns: column { result = [val[0]] }
+         | columns COMMA column { result = val[0] + [val[2]] }
 
   column: expression { result = AST::ColumnNode.new(col_def: val[0]) }
 
