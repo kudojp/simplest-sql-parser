@@ -18,7 +18,22 @@ module AST
       # [:attr5, attr6]
     end
 
-    # used for debugging.
+    def attributes
+      list_attributes_without_child + list_attributes_of_single_child_node + list_attributes_of_multiple_child_nodes
+    end
+
+    # Overwritten for rspec.
+    # In rspec, `eq` matcher uses #==() to compare two objects.
+    # In our case, when comparing two nodes, we must compare their descendant nodes as well.
+    def ==(another_node)
+      self.attributes.each do |attr_sym|
+        return false unless self.send(attr_sym) == another_node.send(attr_sym)
+      end
+
+      true
+    end
+
+    # Used only for debugging.
     def self_and_descendants
       attributes = list_attributes_without_child.map { |attr_sym| "#{attr_sym}=#{send(attr_sym)}" }.join ","
 
