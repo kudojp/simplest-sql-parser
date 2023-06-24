@@ -45,7 +45,7 @@ To update the lex scanner `SimplestSQLParser::LexicalScanner`,
 To update the parser `SimplestSQLParser::Parser`,
 1. Update `lib/simplest_sql_parser/parser.racc`
 2. Run $`bundle exec racc lib/simplest_sql_parser/parser.rex`
-3. Test your implementation with `bundle exec rspec spec/parser_spec.rb`
+3. Test your implementation with `bundle exec rspec spec/parser/do_parse_spec.rb`
 
 ## Contributing
 
