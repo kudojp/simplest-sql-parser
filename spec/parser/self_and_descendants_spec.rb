@@ -1,10 +1,6 @@
-# NOTE1: To compare the generated AST with an expected AST, #self_and_descendants of the generated AST is used.
-#        The reason is that comparing two AST does not work well because object_ids of compared nodes are different, even if the structures are the same.
-# NOTE2: This spec does not mock the lexer used in SimplestSqlParser::Parser.
-#        That is, this tests SimplestSqlParser::Parser with SimplestSqlParser::Parser used in it.
 RSpec.describe SimplestSqlParser::Parser do
   context "when query includes only SELECT statement" do
-    it "generates the AST" do
+    it "generates the AST, and its #self_and_descendants creates a hash of the tree." do
       ast = described_class.new("SELECT name").do_parse
       expect(ast.self_and_descendants).to eq({
         "AST::QueryNode()" => {
@@ -29,7 +25,7 @@ RSpec.describe SimplestSqlParser::Parser do
   end
 
   context "when query includes SELECT, FROM statement" do
-    it "generates the AST" do
+    it "generates the AST, and its #self_and_descendants creates a hash of the tree." do
       ast = described_class.new("SELECT name FROM table").do_parse
       expect(ast.self_and_descendants).to eq({
         "AST::QueryNode()" => {
@@ -62,7 +58,7 @@ RSpec.describe SimplestSqlParser::Parser do
       })
     end
 
-    it "generates the AST" do
+    it "generates the AST, and its #self_and_descendants creates a hash of the tree." do
       ast = described_class.new("SELECT name, address, age FROM table").do_parse
       expect(ast.self_and_descendants).to eq({
         "AST::QueryNode()" => {
@@ -109,7 +105,7 @@ RSpec.describe SimplestSqlParser::Parser do
       })
     end
 
-    it "generates the AST" do
+    it "generates the AST, and its #self_and_descendants creates a hash of the tree." do
       ast = described_class.new("SELECT * FROM table").do_parse
       expect(ast.self_and_descendants).to eq({
         "AST::QueryNode()" => {
@@ -144,7 +140,7 @@ RSpec.describe SimplestSqlParser::Parser do
   end
 
   context "when query includes SELECT, FROM, WHERE statement" do
-    it "generates the AST" do
+    it "generates the AST, and its #self_and_descendants creates a hash of the tree." do
       ast = described_class.new("SELECT name, address FROM table WHERE id = 12.5").do_parse
       expect(ast.self_and_descendants).to eq({
         "AST::QueryNode()" => {
@@ -205,7 +201,7 @@ RSpec.describe SimplestSqlParser::Parser do
   end
 
   context "when a query includes COUNT function" do
-    it "generates the AST" do
+    it "generates the AST, and its #self_and_descendants creates a hash of the tree." do
       ast = described_class.new("SELECT COUNT(*) FROM table WHERE id = 12").do_parse
       expect(ast.self_and_descendants).to eq({
         "AST::QueryNode()" => {
