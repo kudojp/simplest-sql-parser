@@ -198,7 +198,7 @@ RSpec.describe SimplestSqlParser::Parser do
                   col_def: AST::ColumnNode.new(type: :single_col, name: "phone_number")
                 ),
                 right: AST::ExpressionNode.new(
-                  value: "1212" ################### -> This becomes "12.12" in a generated node.
+                  value: "1212" ################### -> This becomes "1212.0" in a generated node.
                 )
               )
             ]
